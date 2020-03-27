@@ -1,20 +1,9 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
-func main() {
-	file, _ := os.Open("/1000/input.txt")
-	fmt.Println(file)
-	b1 := make([]byte, 5)
-	n1, _ := file.Read(b1)
-	fmt.Println(n1)
+func main()  {
+	a, b := 0,0
+	fmt.Scanf("%d %d" ,&a ,&b)
+	fmt.Printf("%d",a+b)
 }
