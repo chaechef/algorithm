@@ -1,4 +1,4 @@
-package main
+package _9663
 
 import (
 	"bufio"
