@@ -28,7 +28,12 @@ func main() {
 		}
 	}
 	res := recursion(s1,s2)
-	fmt.Fprintln(w, len(res))
+	if res != "." {
+		fmt.Fprintln(w, len(res))
+		fmt.Fprintln(w, res)
+	}else {
+		fmt.Fprintln(w, 0)
+	}
 }
 
 func recursion(string1 string, string2 string) string {
