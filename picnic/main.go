@@ -1,71 +1,65 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
-func areFriends (n int, m int) [][]int {
-	arr := make([][]int, n)
-	for j := 0; j < n; j++{
-		arr[j] = make([]int, n)
-	}
-	for j := 0; j < m; j++{
-		var p1, p2 int
-		fmt.Scanf("%d %d", &p1, &p2)
-		arr[p1][p2] = 1
-		arr[p2][p1] = 1
-	}
-	return arr
-}
+var (
+	r = bufio.NewReader(os.Stdin)
+	w = bufio.NewWriter(os.Stdout)
+	tc, n, m int
+	t1, t2 int
+	students []int
+	arefriends [][]bool
+)
 
-func PrintFriends ( arr [][]int) {
-	for i := 0; i < len(arr); i++{
-		for j := 0; j < len(arr[0]); j++ {
-			fmt.Printf("%d ", arr[i][j])
+func main() {
+	defer w.Flush()
+	fmt.Fscan(r, &tc)
+	for t := 0; t < tc; t++ {
+		fmt.Fscan(r, &n, &m )
+		students = make([]int, n)
+		for i := 0; i < n; i++ {
+			students[i] = -1
 		}
-		fmt.Println()
+		arefriends = make([][]bool, n)
+		for i := 0; i < n; i++ {
+			arefriends[i] = make([]bool, n)
+		}
+		for i := 0; i < m; i++ {
+			fmt.Fscan(r, &t1, &t2)
+			arefriends[t1][t2] = true
+			arefriends[t2][t1] = true
+		}
+		res := makepair(students, 1)
+		fmt.Fprintln(w, res)
 	}
 }
 
-func makePair (arr [][]int, friends []int) int {
-	first := -1
-	for i := 0; i< len(friends); i++ {
-		if friends[i] == 0 {
-			first = i
+func makepair(s []int, f int) int {
+	if f == n /2 {
+		return 1
+	}
+
+	var curr, res int
+	for i := 0; i < n; i++ {
+		if s[i] != -1 {
+			curr = i
 			break
 		}
 	}
-	if first == -1 {
-		return 1
-	}
-	res := 0
-	for i := first+1; i < len(friends); i++ {
-		if friends[first] == 0 && friends[i] == 0 && arr[first][i] == 1 {
-			friends[first] = 1
-			friends[i] = 1
-			arr[first][i] = 0
-			arr[i][first] = 0
-			res += makePair(arr, friends)
-			friends[first] = 0
-			friends[i] = 0
-			arr[first][i] = 1
-			arr[i][first] = 1
+
+	for i := curr + 1; i < n; i++ {
+		if arefriends[curr][i] == true {
+			s[curr] = f
+			s[i]= f
+			res += makepair(s, f+1)
+			s[curr] = -1
+			s[i]= -1
 		}
 	}
 	return res
-}
 
-func main() {
-	testcase := 0
-	fmt.Scanf("%d", &testcase)
-	for i := 0; i < testcase; i++ {
-		var n, m int
-		fmt.Scanf("%d %d", &n, &m)
-		arr := areFriends(n,m)
-		//PrintFriends(arr)
-		friends := make( []int, n)
-		res := makePair(arr, friends)
-		fmt.Println(res)
-
-	}
 }
