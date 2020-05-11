@@ -29,12 +29,25 @@ void printboard(vector<vector<int>>& board){
         }
         cout<< endl;
     }
+    cout << endl;
+}
+
+bool set (vector<vector<int>>& board, int y, int x, int type, int delta) {
+    bool ok = true;
+
+    for (int i = 0; i < 3; ++i) {
+        const int ny = y + tile[type][i][0];
+        const int nx = x + tile[type][i][1];
+        if (!inRange(ny,nx)){
+            ok = false;
+        }else if ( (board[ny][nx] += delta) > 1){
+            ok = false;
+        }
+    }
+    return ok;
 }
 int recursion(vector<vector<int>>& board, int count) {
 //    printboard(board);
-    if ( count == 0 ){
-        return 1;
-    }
     int cx = -1, cy = -1;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
@@ -45,26 +58,13 @@ int recursion(vector<vector<int>>& board, int count) {
         }
         if (cx != -1) break;
     }
+    if ( cy == -1 ) return 1;
     int res = 0;
     for (int i = 0; i < 4; ++i) {
-        bool check = true;
-        for (int j = 0; j < 3; ++j) {
-            int ny = cy + tile[i][j][0], nx = cx + tile[i][j][1];
-            if (board[ny][nx] != 0 || !inRange(ny,nx)) {
-                check = false;
-            }
-        }
-        if (check == true) {
-            for (int j = 0; j < 3; ++j) {
-                int ny = cy + tile[i][j][0], nx = cx + tile[i][j][1];
-                board[ny][nx] = 1;
-            }
+        if (set(board, cy, cx, i, 1)) {
             res += recursion(board, count-1);
-            for (int j = 0; j < 3; ++j) {
-                int ny = cy + tile[i][j][0], nx = cx + tile[i][j][1];
-                board[ny][nx] = 0;
-            }
         }
+        set(board,cy,cx,i,-1);
     }
     return res;
 
