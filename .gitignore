@@ -3,3 +3,5 @@
 .idea/
 venv/
 kakao1/
+cmake-build-debug/
+CMakeLists.txt
