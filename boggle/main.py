@@ -10,7 +10,11 @@ def inrange(y, x):
 def recursion(word, y, x):
     dy = [-1, -1, -1, 0, 0, 1, 1, 1]
     dx = [-1, 0, 1, -1, 1, -1, 0, 1]
-
+    xy = [
+        (-1, -1), (-1, 0), (-1, 1),
+        (0, -1), (0, 1),
+        (1, -1), (1, 0), (1, 1)]
+    
     for d in range(len(dy)):
         cy = y + dy[d]
         cx = x + dx[d]
