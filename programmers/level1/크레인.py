@@ -11,6 +11,7 @@ def pick(arr):
 def solution(board, moves):
     answer = 0
     stack = []
+    
     trans = [list(a) for a in zip(*board)]
     for val in moves:
         picked = pick(trans[val-1])
