@@ -15,10 +15,7 @@ def solution(numbers):
     numset = set([])
 
     for i in range(1, len(numbers)+1):
-        temp = permutations(numbers, i)
-        for num in temp:
-            numset.add(int("".join(num)))
-
+        numset |= set([int("".join(val)) for val in list(permutations(numbers, i))])
 
     sprime = prime_set(max(numset))
     for num in numset:
