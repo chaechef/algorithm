@@ -13,10 +13,7 @@ def solution(answers):
             if s[i][idx] == answers[j]:
                 correct[i] += 1
 
-    ret = []
-    for i in range(3):
-        if max(correct) == correct[i]:
-            ret.append(i+1)
+    ret = [idx+1 for idx, val in enumerate(correct) if val == max(correct)]
 
     return ret
 
