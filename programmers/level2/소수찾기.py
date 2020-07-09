@@ -16,8 +16,8 @@ def solution(numbers):
 
     for i in range(1, len(numbers)+1):
         numset |= set([int("".join(val)) for val in list(permutations(numbers, i))])
-
     sprime = prime_set(max(numset))
+
     for num in numset:
         if num in sprime:
             answer += 1
