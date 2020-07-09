@@ -4,27 +4,33 @@ def caldist(char):
 
 def solution(name):
     arr1 = [caldist(char) for char in name]
-    arr2 = [arr1[0]] + arr1[1:][::-1]
-
-    namesum = sum(arr1)
+    arrsum = sum(arr1)
     tempsum = 0
-    ret = -1
-    for val in arr1:
-        if tempsum == namesum:
+    step = -1
+    for a in arr1:
+        if tempsum == arrsum:
             break
-        tempsum += val
-        ret += val + 1
+        tempsum += a
+        step += 1
+    ret = tempsum + step
 
-    tempsum = 0
-    ret1 = -1
-    for val in arr2:
-        if tempsum == namesum:
-            break
-        tempsum += val
-        ret1 += val + 1
+    for i in range(1, len(name)):
+        # i에서 되돌아가기
+        tempsum = 0
+        step = 0
+        for j in range(0, i):
+            tempsum += arr1[j]
+        step += (i-1) * 2
 
-    return min(ret, ret1)
+        for j in range(len(name) - 1, i - 1, -1):
+            if tempsum == arrsum:
+                break
+            tempsum += arr1[j]
+            step += 1
+        if tempsum + step < ret:
+            ret = tempsum + step
+    return ret
 
 print(solution("JEROEN"))
 # print(solution("JAN"))
-print(solution("AAA"))
+print(solution("JAN"))
