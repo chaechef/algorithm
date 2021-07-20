@@ -1,5 +1,5 @@
 import Foundation
-
+// O(n2)
 class Solution {
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
         for i in 0..<nums.count {
@@ -12,7 +12,7 @@ class Solution {
         return []
     }
 }
-
+// O(n)
 class Solution2 {
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
         var table: [Int:Int] = [:]
